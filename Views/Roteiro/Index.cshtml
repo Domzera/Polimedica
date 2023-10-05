@@ -1,0 +1,77 @@
+﻿@using Polimedica.Models
+@using PagedList;
+@model IPagedList<Roteiro>
+
+<div>
+    <div>
+        @if (Model.PageCount == 0)
+        {
+            <h1><br><br>Não tem roteiros cadastrados para hoje.</h1>
+            <h2>@DateOnly.FromDateTime(ViewBag.temp)</h2>
+        }
+        else
+        {
+            <h3>@DateOnly.FromDateTime(ViewBag.temp)</h3>
+            <table class="table" id="myTable">
+                <thead>
+                    <tr>
+                        <th scope="col">Cliente</th>
+                        <th scope="col">Cidade</th>
+                        <th scope="col">Observação</th>
+                        <th scope="col">Cartão</th>
+                        <th scope="col">Vendedor</th>
+                        <th scope="col">Nº venda</th>
+                        <th scope="col">Valor</th>
+                        <th scope="col">Troco</th>
+                        <th scope="col">Periodo</th>
+                        @if (DateOnly.FromDateTime(ViewBag.temp) >= DateOnly.FromDateTime(DateTime.Today))
+                        {
+                            <th>Editar</th>
+                            <th>Delete</th>
+                        }
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <th scope="col">@item.Cliente</th>
+                            <td scope="col">@item.Cidade</td>
+                            <td scope="col">@item.Observacao</td>
+                            <td scope="col">@item.Cartao</td>
+                            <td scope="col">@item.LojaPolimedica</td>
+                            <td scope="col">@item.PedidoNF</td>
+                            <td scope="col">@item.DinheiroCheque</td>
+                            <td scope="col">@item.Troco</td>
+                            <td scope="col">@item.Periodo</td>
+                            @if (DateOnly.FromDateTime(item.Data) >= DateOnly.FromDateTime(DateTime.Today))
+                            {
+                                <td><a asp-controller="Roteiro" asp-action="Edit" asp-route-id="@item.Id" class="btn btn-sm btn-outline-primary">Editar</a></td>
+                                <td><a asp-controller="Roteiro" asp-action="Delete" asp-route-id="@item.Id" class="btn btn-sm btn-outline-danger">Delete</a></td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+    </div>
+    <div><br /><br /></div>
+    <div>
+        <ul class="navbar-nav flex-grow-1">
+            <li class="nav-item">
+                <a class="btn btn-primary" asp-controller="Roteiro" asp-action="Criar">Colocar no roteiro</a>
+            </li>
+        </ul>
+    </div>
+    <div><br /><br /><br /><br /></div>
+    <div>
+        <form asp-action="Index" method="post">
+            <div>
+                <div>
+                    <input type="date" id="filtro" name="filtro" value="@DateOnly.FromDateTime(ViewBag.temp)" />
+                </div><br />
+                <input class="btn btn-primary" type="submit" value="Filtrar" />
+            </div>
+        </form>
+    </div>
+</div>

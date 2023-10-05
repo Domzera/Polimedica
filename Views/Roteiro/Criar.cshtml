@@ -1,0 +1,63 @@
+﻿@using Polimedica.Data.Enum;
+@using Polimedica.ViewModel
+@model CriarVM
+
+<h1>Criar - roteiro</h1>
+
+<form method="post" asp-action="Criar">
+    <div class="mb-1">
+        <label asp-for="Data">Data</label>
+        <!--<input type="date" id="data" name="dia" min="0" class="campos" />-->
+        <input asp-for="Data" type="date" min="0" class="form-control" placeholder="Data">
+        <span asp-validation-for="Data" class="text-danger"></span>
+    </div>
+    <div class="mb-2">
+        <label asp-for="Cliente">Cliente</label>
+        <input asp-for="Cliente" class="form-control" placeholder="Cliente">
+        <span asp-validation-for="Cliente" class="text-danger"></span>
+    </div>
+    <div class="mb-2">
+        <label asp-for="Cidade">Cidade</label>
+        <input asp-for="Cidade" class="form-control" placeholder="Cidade">
+        <span asp-validation-for="Cidade" class="text-danger"></span>
+    </div>
+    <div class="mb-5">
+        <label asp-for="Observacao">Observacao</label>
+        <input asp-for="Observacao" class="form-control" placeholder="Observacao">
+        <span asp-validation-for="Observacao" class="text-danger"></span>
+    </div><div class="mb-3">
+        <label asp-for="Cartao">Cartao</label>
+        <input asp-for="Cartao" class="form-control" placeholder="Cartao">
+        <span asp-validation-for="Cartao" class="text-danger"></span>
+    </div>
+    <div class="mb-2">
+        <label asp-for="LojaPolimedica">LojaPolimedica</label>
+        <select asp-for="LojaPolimedica" asp-items="@Html.GetEnumSelectList<LojaPoli>()">
+            <option>--Select--</option>
+        </select>
+        <span asp-validation-for="LojaPolimedica" class="text-danger"></span>
+    </div>
+    <div class="mb-2">
+        <label asp-for="PedidoNF">PedidoNF</label>
+        <input asp-for="PedidoNF" class="form-control" placeholder="PedidoNF">
+        <span asp-validation-for="PedidoNF" class="text-danger"></span>
+    </div>
+    <div class="mb-2">
+        <label asp-for="DinheiroCheque">DinheiroCheque</label>
+        <input asp-for="DinheiroCheque" class="form-control" placeholder="DinheiroCheque">
+        <span asp-validation-for="PedidoNF" class="text-danger"></span>
+    </div>
+    <div class="mb-2">
+        <label asp-for="Troco">Troco</label>
+        <input asp-for="Troco" class="form-control" placeholder="Troco">
+        <span asp-validation-for="Troco" class="text-danger"></span>
+    </div>
+    <div class="mb-2">
+        <label asp-for="Periodo">Periodo</label>
+        <select asp-for="Periodo" asp-items="@Html.GetEnumSelectList<Periodo>()">
+            <option>--Select--</option>
+        </select>
+        <span asp-validation-for="Periodo" class="text-danger"></span>
+    </div>
+    <button type="submit" class="btn btn-primary">Colocar</button>
+</form>
