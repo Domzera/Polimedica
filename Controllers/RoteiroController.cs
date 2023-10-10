@@ -5,6 +5,7 @@ using Polimedica.Models;
 using Polimedica.ViewModel;
 using PagedList;
 using Polimedica.Data.Enum;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Polimedica.Controllers
 {
@@ -36,12 +37,14 @@ namespace Polimedica.Controllers
 
             return View(model);
         }
+        [Authorize]
         public IActionResult Criar()
         {
             var response = new CriarVM();
             return View(response);
         }
-        
+
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Criar(CriarVM criarVM)
         {
@@ -73,6 +76,7 @@ namespace Polimedica.Controllers
             return RedirectToAction("Index", "Roteiro");
         }
 
+        [Authorize]
         public async Task<IActionResult> Edit(int id)
         {
             var roteiro = await _context.Roteiros.FirstOrDefaultAsync(i => i.Id == id);
@@ -93,6 +97,7 @@ namespace Polimedica.Controllers
             return View(editVM);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Edit(int id, EditRoteiroVM editRVM)
         {
@@ -132,6 +137,7 @@ namespace Polimedica.Controllers
             }
         }
 
+        [Authorize]
         public async Task<IActionResult> Delete(int id)
         {
             if(id == null)

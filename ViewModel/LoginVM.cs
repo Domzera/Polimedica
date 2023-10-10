@@ -1,5 +1,4 @@
-﻿using System.ComponentModel;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Polimedica.ViewModel
 {
@@ -10,6 +9,7 @@ namespace Polimedica.ViewModel
         public string Nome { get; set; }
         [Display(Name = "Senha")]
         [Required(ErrorMessage ="Senha invalida")]
+        [DataType(DataType.Password)]
         public string Password { get; set; }
     }
 }

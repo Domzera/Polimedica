@@ -32,7 +32,7 @@ namespace Polimedica.Controllers
             {
                 return View(loginVM);
             }
-            var user = await _userManager.FindByEmailAsync(loginVM.Nome);
+            var user = await _userManager.FindByNameAsync(loginVM.Nome);
 
             if (user != null)
             {

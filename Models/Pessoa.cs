@@ -1,10 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Identity;
+using System.ComponentModel.DataAnnotations;
 
 namespace Polimedica.Models
 {
-    public class Pessoa
+    public class Pessoa:IdentityUser
     {
-        public int Id { get; set; }
+        //public int Id { get; set; }
         [Required,MaxLength(30)]
         public string PrimeiroNome { get; set; }
         [Required,MaxLength(30)]

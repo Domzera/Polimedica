@@ -1,5 +1,10 @@
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
 using Polimedica.Data;
+using Polimedica.Migrations;
+using Polimedica.Models;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +14,26 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<PolimedicaDbContetxt>(options =>
 {
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+});
+
+builder.Services.AddIdentity<Pessoa, IdentityRole>(options =>
+{
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+    options.Lockout.MaxFailedAccessAttempts = 3;
+})
+    .AddEntityFrameworkStores<PolimedicaDbContetxt>();
+
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.HttpOnly = true;
+    options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+});
+
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+builder.Services.ConfigureApplicationCookie(options =>
+{
+    options.Cookie.Name = "Polimedica.SharedCookie";
+    //options.Cookie.Expiration = TimeSpan.FromMinutes(2);
 });
 
 var app = builder.Build();
@@ -27,6 +52,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.UseAuthorization();
+app.UseAuthentication();
 
 app.MapControllerRoute(
     name: "default",
