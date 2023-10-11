@@ -1,0 +1,24 @@
+﻿@using Polimedica.ViewModel;
+@model RegisterVM
+<body class="text-center vsc-initialized">
+
+    <main class="form-signin">
+        <form asp-action="Login" method="post">
+            <img class="mb-4" src="~/Image/Logo.jpeg">
+            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
+
+            <div class="form-floating">
+                <input asp-for="Nome" class="form-control">
+                <label asp-for="Nome">Nome</label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Funcao" class="form-control">
+                <label asp-for="Funcao">Função</label>
+            </div>
+            <div class="form-floating">
+                <input asp-for="Senha" class="form-control">
+                <label asp-for="Senha">Password</label>
+            </div>
+        </form>
+    </main>
+</body>
