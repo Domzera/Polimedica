@@ -53,7 +53,9 @@ namespace Polimedica.Controllers
                 return View(criarVM);
             }
 
-            var User = new Roteiro
+            string cookie = _context.GetType().Name;
+
+            var roteiro = new Roteiro
             {
                 Checado = "false",
                 Data = criarVM.Data < DateTime.Today ?
@@ -67,10 +69,11 @@ namespace Polimedica.Controllers
                 PedidoNF = criarVM.PedidoNF,
                 DinheiroCheque = criarVM.DinheiroCheque,
                 Troco = criarVM.Troco,
-                Periodo = criarVM.Periodo
-
+                Periodo = criarVM.Periodo,
+                Criou = cookie
             };
-            _context.Roteiros.Add(User);
+
+            _context.Roteiros.Add(roteiro);
             await _context.SaveChangesAsync();
 
             return RedirectToAction("Index", "Roteiro");
@@ -81,6 +84,9 @@ namespace Polimedica.Controllers
         {
             var roteiro = await _context.Roteiros.FirstOrDefaultAsync(i => i.Id == id);
             if (roteiro == null) return View("Error");
+
+            string cookie = _context.GetType().Name;
+
             var editVM = new EditRoteiroVM
             {
                 Data = roteiro.Data,
@@ -92,7 +98,8 @@ namespace Polimedica.Controllers
                 PedidoNF = roteiro.PedidoNF,
                 DinheiroCheque = roteiro.DinheiroCheque,
                 Troco = roteiro.Troco,
-                Periodo = roteiro.Periodo
+                Periodo = roteiro.Periodo,
+                Editou = cookie
             };
             return View(editVM);
         }

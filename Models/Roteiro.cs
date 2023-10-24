@@ -28,5 +28,7 @@ namespace Polimedica.Models
         public string? Troco { get; set; }
         [Required]
         public Periodo? Periodo { get; set;}
+        public string Criou { get; set; }
+        public string Editou { get; set; }
     }
 }

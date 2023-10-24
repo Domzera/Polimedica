@@ -18,5 +18,6 @@ namespace Polimedica.ViewModel
         public string? DinheiroCheque { get; set; }
         public string? Troco { get; set; }
         public Periodo Periodo { get; set; }
+        public string Criou { get; set; }
     }
 }

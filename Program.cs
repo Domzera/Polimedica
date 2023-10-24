@@ -18,7 +18,7 @@ builder.Services.AddDbContext<PolimedicaDbContetxt>(options =>
 
 builder.Services.AddIdentity<Pessoa, IdentityRole>(options =>
 {
-    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(1);
+    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(3);
     options.Lockout.MaxFailedAccessAttempts = 3;
 })
     .AddEntityFrameworkStores<PolimedicaDbContetxt>();
@@ -27,14 +27,11 @@ builder.Services.ConfigureApplicationCookie(options =>
 {
     options.Cookie.HttpOnly = true;
     options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
+    options.Cookie.Name = "PolimedicaCookie";
 });
 
-builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
-builder.Services.ConfigureApplicationCookie(options =>
-{
-    options.Cookie.Name = "Polimedica.SharedCookie";
-    //options.Cookie.Expiration = TimeSpan.FromMinutes(2);
-});
+//builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
+//  ***  Não é nescessário usar a linha de cima(de autenticação por cookie), pois o Identity ja cuida disso.  ***
 
 var app = builder.Build();
 
@@ -51,6 +48,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
+app.UseCookiePolicy();
 app.UseAuthorization();
 app.UseAuthentication();
 

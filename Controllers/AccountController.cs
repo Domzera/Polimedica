@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Polimedica.Data;
 using Polimedica.ViewModel;
 using Microsoft.AspNetCore.Identity;
+using System.Diagnostics.Eventing.Reader;
 
 namespace Polimedica.Controllers
 {
@@ -12,17 +13,20 @@ namespace Polimedica.Controllers
         private readonly SignInManager<Pessoa> _signInManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly PolimedicaDbContetxt _context;
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
         public AccountController(
             UserManager<Pessoa> userManager,
             SignInManager<Pessoa> signInManager,
             RoleManager<IdentityRole> roleManager,
-            PolimedicaDbContetxt context)
+            PolimedicaDbContetxt context,
+            IHttpContextAccessor httpContextAccessor)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _roleManager = roleManager;
             _context = context;
+            _httpContextAccessor = httpContextAccessor;
         }
 
         public IActionResult Login()
@@ -48,6 +52,13 @@ namespace Polimedica.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
+                        var optionsCookie = new CookieOptions
+                        {
+                            Expires = DateTime.Now.AddMinutes(5),
+                            HttpOnly = true,
+                            Secure = true,
+                        };
+                        _httpContextAccessor.HttpContext.Response.Cookies.Append("Polime", user.Id, optionsCookie);
                         return RedirectToAction("Criar", "Roteiro");
                     }
                 }
@@ -63,6 +74,7 @@ namespace Polimedica.Controllers
             var response = new RegisterVM();
             return View(response);
         }
+
         [HttpPost]
         public async Task<IActionResult> Register(RegisterVM registerVM)
         {
@@ -76,6 +88,7 @@ namespace Polimedica.Controllers
                 var newUser = new Pessoa()
                 {
                     PrimeiroNome = registerVM.Nome,
+                    UserName = "Luiz",
                     funcao = registerVM.Funcao
                 };
                 var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Senha);
