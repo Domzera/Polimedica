@@ -52,13 +52,13 @@ namespace Polimedica.Controllers
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
-                        var optionsCookie = new CookieOptions
-                        {
-                            Expires = DateTime.Now.AddMinutes(5),
-                            HttpOnly = true,
-                            Secure = true,
-                        };
-                        _httpContextAccessor.HttpContext.Response.Cookies.Append("Polime", user.Id, optionsCookie);
+                        //var optionsCookie = new CookieOptions
+                        //{
+                        //    Expires = DateTime.Now.AddMinutes(5),
+                        //    HttpOnly = true,
+                        //    Secure = true,
+                        //};
+                        //_httpContextAccessor.HttpContext.Response.Cookies.Append("Polime", user.Id, optionsCookie);
                         return RedirectToAction("Criar", "Roteiro");
                     }
                 }
@@ -89,7 +89,8 @@ namespace Polimedica.Controllers
                 {
                     PrimeiroNome = registerVM.Nome,
                     UserName = "Luiz",
-                    funcao = registerVM.Funcao
+                    funcao = registerVM.Funcao,
+                    Password = registerVM.Senha
                 };
                 var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Senha);
                 if(newUserResponse.Succeeded)

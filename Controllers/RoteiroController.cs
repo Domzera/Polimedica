@@ -46,6 +46,7 @@ namespace Polimedica.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Criar(CriarVM criarVM)
         {
             if (!ModelState.IsValid)
@@ -80,6 +81,8 @@ namespace Polimedica.Controllers
         }
 
         [Authorize]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id)
         {
             var roteiro = await _context.Roteiros.FirstOrDefaultAsync(i => i.Id == id);
@@ -106,6 +109,7 @@ namespace Polimedica.Controllers
 
         [Authorize]
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, EditRoteiroVM editRVM)
         {
             if (!ModelState.IsValid)

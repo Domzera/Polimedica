@@ -25,14 +25,23 @@ builder.Services.AddIdentity<Pessoa, IdentityRole>(options =>
 
 builder.Services.ConfigureApplicationCookie(options =>
 {
+    options.LoginPath = "/Account/Login";
+    options.Cookie.Name = "PoliCookie";
     options.Cookie.HttpOnly = true;
-    options.ExpireTimeSpan = TimeSpan.FromMinutes(2);
-    options.Cookie.Name = "PolimedicaCookie";
+    options.ExpireTimeSpan = TimeSpan.FromSeconds(5);
+    options.Cookie.SameSite = SameSiteMode.None;
+    options.Cookie.SecurePolicy = CookieSecurePolicy.None;
+    options.SlidingExpiration = true;
+    
 });
 
 //builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie();
 //  ***  Não é nescessário usar a linha de cima(de autenticação por cookie), pois o Identity ja cuida disso.  ***
 
+//var cookiePolicyOptions = new CookiePolicyOptions
+//{
+//    MinimumSameSitePolicy = SameSiteMode.Strict,
+//};
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -48,7 +57,7 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-app.UseCookiePolicy();
+//app.UseCookiePolicy(cookiePolicyOptions);
 app.UseAuthorization();
 app.UseAuthentication();
 
