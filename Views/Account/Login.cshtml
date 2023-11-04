@@ -8,8 +8,8 @@ Bem vindo aos acessórios da Plomédica do Vale
     <main class="form-signin">
         <form asp-action="Login" method="post">
             <img class="mb-4" src="~/Image/Logo.jpeg">
-            <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
-
+            <h1 class="h3 mb-3 fw-normal"> - Login - </h1>
+            <br />
             <div class="form-floating">
                 <input asp-for="Nome" class="form-control">
                 <label asp-for="Nome">Nome</label>
@@ -18,15 +18,10 @@ Bem vindo aos acessórios da Plomédica do Vale
                 <input asp-for="Password" class="form-control">
                 <label asp-for="Password">Password</label>
             </div>
-            <!--
-            <div class="checkbox mb-3">
-                <label>
-                    <input type="checkbox" value="remember-me"> Remember me
-                </label>
-            </div>
-            -->
             <br />
-            <button class="btn btn-lg btn-primary" type="submit">Sign in</button>
+            <div class="form-group">
+                <input class="btn btn-lg btn-primary" type="submit" value="  Login  " />
+            </div>
         </form>
     </main>
     <br />

@@ -29,7 +29,6 @@ namespace Polimedica.Controllers
                 1 :
                 roteiros.Count(d => d.Data.Equals(tempo));
             
-
             //Aqui monta o IPagedList - Ternário
             IPagedList<Roteiro> model = DateTime.Today.Equals(tempo) ?
                 roteiros.Where(d => d.Data.Equals(DateTime.Today)).ToPagedList(page ?? 1, quant) :
@@ -37,16 +36,9 @@ namespace Polimedica.Controllers
 
             return View(model);
         }
-        [Authorize]
-        public IActionResult Criar()
-        {
-            var response = new CriarVM();
-            return View(response);
-        }
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Criar(CriarVM criarVM)
         {
             if (!ModelState.IsValid)
@@ -60,8 +52,8 @@ namespace Polimedica.Controllers
             {
                 Checado = "false",
                 Data = criarVM.Data < DateTime.Today ?
-                    DateTime.Today :
-                    criarVM.Data,
+                       DateTime.Today :
+                       criarVM.Data,
                 Cliente = criarVM.Cliente,
                 Cidade = criarVM.Cidade,
                 Observacao = criarVM.Observacao,
@@ -82,7 +74,6 @@ namespace Polimedica.Controllers
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id)
         {
             var roteiro = await _context.Roteiros.FirstOrDefaultAsync(i => i.Id == id);
@@ -109,7 +100,6 @@ namespace Polimedica.Controllers
 
         [Authorize]
         [HttpPost]
-        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, EditRoteiroVM editRVM)
         {
             if (!ModelState.IsValid)

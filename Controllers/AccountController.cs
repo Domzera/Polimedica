@@ -46,19 +46,12 @@ namespace Polimedica.Controllers
 
             if (user != null)
             {
-                var passWordChack = await _userManager.CheckPasswordAsync(user, loginVM.Password);
-                if (passWordChack)
+                var passWordCheck = await _userManager.CheckPasswordAsync(user, loginVM.Password);
+                if (passWordCheck)
                 {
                     var result = await _signInManager.PasswordSignInAsync(user, loginVM.Password, false, false);
                     if (result.Succeeded)
                     {
-                        //var optionsCookie = new CookieOptions
-                        //{
-                        //    Expires = DateTime.Now.AddMinutes(5),
-                        //    HttpOnly = true,
-                        //    Secure = true,
-                        //};
-                        //_httpContextAccessor.HttpContext.Response.Cookies.Append("Polime", user.Id, optionsCookie);
                         return RedirectToAction("Criar", "Roteiro");
                     }
                 }
