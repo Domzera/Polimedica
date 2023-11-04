@@ -88,11 +88,11 @@ namespace Polimedica.Controllers
                 var newUser = new Pessoa()
                 {
                     PrimeiroNome = registerVM.Nome,
-                    UserName = "Luiz",
+                    UserName = Nome(registerVM.Nome),
                     funcao = registerVM.Funcao,
-                    Password = registerVM.Senha
+                    Password = registerVM.Password
                 };
-                var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Senha);
+                var newUserResponse = await _userManager.CreateAsync(newUser, registerVM.Password);
                 if(newUserResponse.Succeeded)
                 {
                     var role = await _roleManager.RoleExistsAsync(registerVM.Funcao);
@@ -102,6 +102,23 @@ namespace Polimedica.Controllers
                 return RedirectToAction("Index", "Roteiro");//Alterar aqui para enviar para pagina de detalhes pessoal
             }
             return RedirectToAction("index", "home");
+        }
+        private string Nome(string corta)
+        {
+            string nome = "";
+            
+            foreach (char ch in corta)
+            {
+                if(ch.Equals(' '))
+                {
+                    break;
+                }
+                else{
+                    nome = nome + ch.ToString();
+                }
+            }
+
+            return nome.ToUpper();
         }
     }
 }
